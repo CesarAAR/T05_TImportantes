@@ -1,17 +1,50 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Tab 1
+      Tareas
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 1</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-row>
+  <ion-col size-lg="11"> 
+    <ion-item>
+      <ion-label position="floating">Nueva Trea</ion-label>
+      <ion-input [(ngModel)]="task"></ion-input>
+    </ion-item>
+  </ion-col>
+  <ion-col size-leg="1">
+    <ion-button expand="block" (click)="addTask()" *ngIf="task">
+      <ion-icon name="add"></ion-icon>
+    </ion-button>
+  </ion-col>
+</ion-row>
+<ion-row>
+  <ion-col>
+    <ion-list *ngIf="tasks.length>0">
 
-  <app-explore-container name="Tab 1 page"></app-explore-container>
+      <ion-item-sliding *ngFor="let item of tasks; let i=index">
+        <ion-item-options side="start" >
+          <ion-item-option expandable color="success" (click)="completeTask(i)">
+            <ion-icon name="checkmark-done-outline"></ion-icon>
+          </ion-item-option>  
+
+          <ion-item-option expandable color="warning" (click)="addFavorite(i)" >
+            <ion-icon name="star"></ion-icon>
+          </ion-item-option>
+
+        </ion-item-options>
+        <ion-item>
+          <ion-label>{{item}}</ion-label>
+        </ion-item>
+        <ion-item-options side="end" (ionSwipe)="removeTask(i)">
+          <ion-item-option expandable color="danger">
+            <ion-icon name="trash-outline"></ion-icon>
+          </ion-item-option>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ion-list>
+  </ion-col>
+</ion-row>
 </ion-content>
